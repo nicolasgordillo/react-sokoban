@@ -12,9 +12,12 @@ class Player {
 
     draw (context) {
         context.fillStyle = '#000';
-        context.textBaseline = 'hanging';
-        context.font = `${this.size}px Helvetica`;
-        context.fillText('@', this.x * this.size, this.y * this.size);
+        //context.textBaseline = 'hanging';
+        //context.font = `${this.size}px Helvetica`;
+        //context.fillText('@', this.x * this.size, this.y * this.size);
+        context.beginPath();
+        context.arc((this.x * this.size) + this.size / 2, (this.y * this.size) + this.size / 2, this.size / 2, 0, 2 * Math.PI);
+        context.fill();
     }
 
     copyPlayer () {

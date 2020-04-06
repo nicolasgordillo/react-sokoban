@@ -13,6 +13,7 @@ class World {
             this.worldmap[x] = new Array(this.height);
         }
 
+        //Creating random map, we can use https://github.com/ondras/rot.js/ to generate maps, but we will use fixed map to copy game originals. 
         this.createRandomMap();
         this.moveToSpace(this.player);
     }
@@ -60,7 +61,7 @@ class World {
 
     moveToSpace (entity) {
         for (let x = entity.x; x < this.width; x++) {
-            for (let y = entity.y; x < this.height; y++) {
+            for (let y = entity.y; y < this.height; y++) {
                 if (!this.isWall(x, y)) {
                     entity.x = x;
                     entity.y = y;

@@ -1,8 +1,8 @@
 import React from 'react';
 
-const Statistics = () => { 
+const Statistics = ({ width }) => { 
     return (
-        <div>
+        <div style={{ textAlign: 'center', width: width, fontSize: '31px', fontFamily: 'Helvetica' }}>
             <b> 01 </b>
             <span> | </span>
             <b> moves: </b>

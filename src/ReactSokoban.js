@@ -56,7 +56,7 @@ const ReactSokoban = ({ width, height, tilesize }) => {
                 height={height * tilesize}
                 style={{ border: '1px solid black' }}
             ></canvas>
-            <Statistics />
+            <Statistics width={width * tilesize} />
         </div>
     )
 };
