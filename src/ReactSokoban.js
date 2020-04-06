@@ -1,20 +1,31 @@
 import React, { useRef, useEffect, useState } from 'react';
 import InputManager from './InputManager';
 import Player from './Player';
+import World from './World';
+import Statistics from './Statistics';
 
 const ReactSokoban = ({ width, height, tilesize }) => {
     const canvasRef = React.useRef(); //Hook to access an element using canvasRef.current
-    const [player, setPlayer] = useState(new Player(1, 2, tilesize)); //Initialize player state, setPlayer fn update state
-
+    //const [player, setPlayer] = useState(new Player(1, 2, tilesize)); //Initialize player state, setPlayer fn update state
+    const [world, setWorld] = useState(new World(width, height, tilesize));
     let inputManager = new InputManager();
 
     const handleInput = (action, data) => {
         console.log(`handle input:${action}:${JSON.stringify(data)}`);
-        let newPlayer = new Player();
-        Object.assign(newPlayer, player); //Cannot use spread operator to make a copy here
-        newPlayer.move(data.x, data.y);
-        setPlayer(newPlayer);
+        let newWorld = new World();
+        Object.assign(newWorld, world); //Cannot use spread operator to make a copy here
+        newWorld.movePlayer(data.x, data.y);
+        setWorld(newWorld);
     }
+
+    useEffect(() => {
+        console.log('Create map');
+
+        let newWorld = new World();
+        Object.assign(newWorld, world); //Cannot use spread operator to make a copy here
+        newWorld.createRandomMap();
+        setWorld(newWorld);
+    }, []); //second parameter is for only render once this component mount
 
     useEffect(() => {
         console.log('Bind events');
@@ -34,16 +45,19 @@ const ReactSokoban = ({ width, height, tilesize }) => {
 
         const ctx = canvasRef.current.getContext('2d');
         ctx.clearRect(0, 0, width * tilesize, height * tilesize);
-        player.draw(ctx);
+        world.draw(ctx);
     }); 
 
     return (
-        <canvas
-            ref={canvasRef}
-            width={width * tilesize}
-            height={height * tilesize}
-            style={{ border: '1px solid black' }}
-        ></canvas>
+        <div>
+            <canvas
+                ref={canvasRef}
+                width={width * tilesize}
+                height={height * tilesize}
+                style={{ border: '1px solid black' }}
+            ></canvas>
+            <Statistics />
+        </div>
     )
 };
 
