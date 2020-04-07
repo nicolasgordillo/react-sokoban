@@ -1,12 +1,12 @@
 import React from 'react';
 
-const Statistics = ({ width }) => { 
+const Statistics = ({ width, level, moves }) => { 
     return (
         <div style={{ textAlign: 'center', width: width, fontSize: '31px', fontFamily: 'Helvetica' }}>
-            <b> 01 </b>
+            <b> { level.toString().padStart(2, "0") } </b>
             <span> | </span>
             <b> moves: </b>
-            <span> 0003 </span>
+            <span> { moves.toString().padStart(3, "0") } </span>
             <b> pushes: </b>
             <span> 0000 </span>
             <b> time </b>

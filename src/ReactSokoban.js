@@ -23,7 +23,8 @@ const ReactSokoban = ({ width, height, tilesize }) => {
 
         let newWorld = new World();
         Object.assign(newWorld, world); //Cannot use spread operator to make a copy here
-        newWorld.createRandomMap();
+        newWorld.loadLevel(1);
+
         setWorld(newWorld);
     }, []); //second parameter is for only render once this component mount
 
@@ -56,7 +57,7 @@ const ReactSokoban = ({ width, height, tilesize }) => {
                 height={height * tilesize}
                 style={{ border: '1px solid black' }}
             ></canvas>
-            <Statistics width={width * tilesize} />
+            <Statistics width={width * tilesize} level={world.currentLevel} moves={world.stepCounter} />
         </div>
     )
 };

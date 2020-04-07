@@ -7,6 +7,8 @@ class World {
         this.height = height;
         this.tilesize = tilesize;
         this.entities = [new Player(0, 0, tilesize)];
+        this.stepCounter = 0;
+        this.currentLevel = 1;
 
         this.worldmap = new Array(this.width);
         for (let x = 0; x < this.width; x++) {
@@ -14,8 +16,28 @@ class World {
         }
 
         //Creating random map, we can use https://github.com/ondras/rot.js/ to generate maps, but we will use fixed map to copy game originals. 
-        this.createRandomMap();
-        this.moveToSpace(this.player);
+        //this.createRandomMap();
+        //this.createMapForLevel(1);
+    }
+
+    loadLevel = level => {
+        this.currentLevel = level;
+        this.createMap();
+    }
+
+    createMap = () => {
+        const tempMap = require(`./levels/${this.currentLevel}.json`);
+
+        for (let x = 0; x < this.height; x++) {
+            for (let y = 0; y < this.width; y++) {
+                this.worldmap[y][x] = tempMap[x][y] !== 1 ? 0 : 1;
+                if (tempMap[x][y] === 2) {
+                    this.moveTo(this.player, y, x);
+                }
+            }
+        }
+
+        console.log(this.worldmap);
     }
 
     createRandomMap = () => {
@@ -57,6 +79,15 @@ class World {
             return;
         }
         this.player.move(dx, dy);
+        this.stepCounter++;
+    }
+
+    moveTo (entity, x, y) {
+        if (!this.isWall(x, y)) {
+            entity.x = x;
+            entity.y = y;
+            return;
+        }
     }
 
     moveToSpace (entity) {
